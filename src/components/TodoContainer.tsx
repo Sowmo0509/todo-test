@@ -44,10 +44,10 @@ export default function TodoContainer() {
   // change asc to dsc or vice-verca based on priority
   useEffect(() => {
     if (isHighTop) {
-      const sortedData = [...todoToShow].sort((a, b) => getPriorityValue(a.priority) - getPriorityValue(b.priority));
+      const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(a.priority) - getPriorityValue(b.priority));
       setTodoToShow(sortedData);
     } else {
-      const sortedData = [...todoToShow].sort((a, b) => getPriorityValue(b.priority) - getPriorityValue(a.priority));
+      const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(b.priority) - getPriorityValue(a.priority));
       setTodoToShow(sortedData);
     }
   }, [isHighTop]);
