@@ -14,13 +14,11 @@ export default function TodoContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [filterState, setFilterState] = useState("pending");
   const [isHighTop, setIsHighTop] = useState(true);
-  const [todoToShow, setTodoToShow] = useState(pendingTodos);
+  const [todoToShow, setTodoToShow] = useState([]);
 
-  // if todos are already there, do not fetch again
   useEffect(() => {
-    if (todos.length > 1) {
-      return setTodoToShow(pendingTodos);
-    }
+    // if todos are already there, do not fetch again
+    if (todos.length > 1) return;
     getAllTodos();
   }, []);
 
@@ -36,6 +34,7 @@ export default function TodoContainer() {
     const { data } = await axios.get("/api/read");
     if (data.success == true) {
       setTodos(data.data);
+      setTodoToShow(pendingTodos);
       setIsLoading(false);
     } else {
       console.log("issue");
