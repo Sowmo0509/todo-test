@@ -16,17 +16,12 @@ enum Priority {
   HIGH
 }
 
-enum Status {
-  PENDING
-  COMPLETED
-}
-
 model Todo {
   id        Int       @id @default(autoincrement())
   title     String    @db.VarChar(255)
   desc      String?
   priority  Priority? @default(LOW)
-  status    Status?   @default(PENDING)
+  status    Boolean?  @default(false)
   createdAt DateTime  @default(now()) @db.Timestamp(6)
   updatedAt DateTime  @updatedAt
 }
