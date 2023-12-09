@@ -7,10 +7,10 @@ export const useTodoStore = create((set) => ({
   setTodos: (allTodos: any) => {
     set((state: any) => ({
       todos: allTodos,
-      pendingTodos: state.todos.filter(function (e: any) {
+      pendingTodos: allTodos.filter(function (e: any) {
         return e.status != true;
       }),
-      completedTodos: state.todos.filter(function (e: any) {
+      completedTodos: allTodos.filter(function (e: any) {
         return e.status != false;
       }),
     }));
