@@ -18,7 +18,9 @@ export default function TodoContainer() {
 
   // if todos are already there, do not fetch again
   useEffect(() => {
-    if (todos.length > 1) return;
+    if (todos.length > 1) {
+      return setTodoToShow(pendingTodos);
+    }
     getAllTodos();
   }, []);
 
@@ -80,7 +82,7 @@ export default function TodoContainer() {
           </Center>
         ) : todos.length > 1 ? (
           <Stack divider={<StackDivider />} spacing="4">
-            {todos.map((todo: any, i: number) => (
+            {todoToShow.map((todo: any, i: number) => (
               <Todo {...todo} key={i} />
             ))}
           </Stack>
