@@ -16,16 +16,19 @@ export default function TodoContainer() {
   const [isHighTop, setIsHighTop] = useState(true);
   const [todoToShow, setTodoToShow] = useState(pendingTodos);
 
+  // if todos are already there, do not fetch again
   useEffect(() => {
     if (todos.length > 1) return;
     getAllTodos();
   }, []);
 
+  // change display todo based on filtering state
   useEffect(() => {
     if (filterState == "pending") return setTodoToShow(pendingTodos);
     if (filterState == "completed") return setTodoToShow(completedTodos);
   }, [filterState, pendingTodos, completedTodos]);
 
+  // get all todo (can be modularized in controllers)
   const getAllTodos = async () => {
     setIsLoading(true);
     const { data } = await axios.get("/api/read");
@@ -35,6 +38,7 @@ export default function TodoContainer() {
     }
   };
 
+  // change asc to dsc or vice-verca based on priority
   useEffect(() => {
     if (isHighTop) {
       const sortedData = [...todoToShow].sort((a, b) => getPriorityValue(a.priority) - getPriorityValue(b.priority));

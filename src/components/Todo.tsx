@@ -26,6 +26,7 @@ export default function Todo({ title, desc, status, priority, id }: any) {
     setIsDone((status: boolean) => !status);
     const { data } = await axios.post(`/api/status/?id=${id}`, { done: !isDone });
     if (data.success == true) {
+      // manage state without reload
       if (isDone == true) {
         uncheckTodo(id, { id, title, desc, status: false, priority });
       } else {
