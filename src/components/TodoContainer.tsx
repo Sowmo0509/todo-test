@@ -80,7 +80,7 @@ export default function TodoContainer() {
           </Center>
         ) : todos.length > 1 ? (
           <Stack divider={<StackDivider />} spacing="4">
-            {todoToShow.map((todo: any, i: number) => (
+            {todos.map((todo: any, i: number) => (
               <Todo {...todo} key={i} />
             ))}
           </Stack>
