@@ -18,7 +18,7 @@ export default function TodoContainer() {
 
   // if todos are already there, do not fetch again
   useEffect(() => {
-    // if (todos.length > 1) return;
+    if (todos.length > 1) return;
     getAllTodos();
   }, []);
 
