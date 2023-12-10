@@ -32,7 +32,7 @@ const NewTodo = () => {
   };
 
   return (
-    <Card w={"sm"} maxW={"sm"}>
+    <Card mx={4} w={"sm"} maxW={"sm"}>
       <CardHeader>
         <Flex justify={"space-between"} align={"center"}>
           <Heading size="md">New Todo</Heading>

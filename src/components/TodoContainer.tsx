@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardHeader, CardBody, Heading, Stack, StackDivider, Flex, Spinner, Center, Select, IconButton } from "@chakra-ui/react";
+import { Card, CardHeader, CardBody, Heading, Stack, StackDivider, Flex, Spinner, Center, Select, IconButton, Text, CardFooter } from "@chakra-ui/react";
 import Todo from "./Todo";
 import { AddIcon, ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/navigation";
@@ -53,7 +53,7 @@ export default function TodoContainer() {
   }, [isHighTop]);
 
   return (
-    <Card my={8} w={"sm"} maxW={"sm"} mx={"auto"}>
+    <Card my={8} w={"sm"} maxW={"sm"} mx={4}>
       <CardHeader>
         <Flex justify={"space-between"} align={"center"}>
           <Heading onClick={() => console.log(todoToShow)} size="md">
@@ -89,6 +89,11 @@ export default function TodoContainer() {
           "No todo"
         )}
       </CardBody>
+      <CardFooter>
+        <Text opacity={0.5} fontSize={"xs"} mx={"auto"}>
+          Made by Ahmed Shams Wali
+        </Text>
+      </CardFooter>
     </Card>
   );
 }
