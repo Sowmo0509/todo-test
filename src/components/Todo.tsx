@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Todo({ title, desc, status, priority, id }: any) {
+export default function Todo({ title, desc, status, priority, id, ...rest }: any) {
   const router = useRouter();
   const { removeTodo, checkTodo, uncheckTodo }: any = useTodoStore((state) => state);
 
@@ -24,13 +24,13 @@ export default function Todo({ title, desc, status, priority, id }: any) {
 
   const handleIsDone = async () => {
     setIsDone((status: boolean) => !status);
-    const { data } = await axios.post(`/api/status/?id=${id}`, { done: !isDone });
+    const { data } = await axios.post(`/api/status/?id=${id}`, { done: !status });
     if (data.success == true) {
       // manage state without reload
-      if (isDone == true) {
-        uncheckTodo(id, { id, title, desc, status: false, priority });
+      if (status == true) {
+        uncheckTodo(id, { id, title, desc, status: false, priority, rest });
       } else {
-        checkTodo(id, { id, title, desc, status: true, priority });
+        checkTodo(id, { id, title, desc, status: true, priority, rest });
       }
       return;
     }
@@ -42,8 +42,8 @@ export default function Todo({ title, desc, status, priority, id }: any) {
       <Flex justify={"space-between"} align={"center"}>
         <Flex gap={2}>
           <Checkbox isChecked={status} onChange={handleIsDone} />
-          <Heading size="xs" textTransform="uppercase">
-            {id} {title}
+          <Heading size="xs" textTransform="capitalize">
+            {title}
           </Heading>
           <Badge fontSize={"xx-small"}>{priority}</Badge>
         </Flex>
