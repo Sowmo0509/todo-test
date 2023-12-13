@@ -35,6 +35,26 @@ export const useTodoStore = create((set) => ({
       }),
     }));
   },
+  editTodo: (id: any, newValue: any) => {
+    set((state: any) => {
+      const allTodos = [...state.todos];
+      const updatedArray = allTodos.map((item) => {
+        if (item.id == id) {
+          return { ...item, ...newValue }; // Update only the specified fields
+        }
+        return item;
+      });
+      return {
+        todos: [...updatedArray],
+        pendingTodos: updatedArray.filter(function (e: any) {
+          return e.status != true;
+        }),
+        completedTodos: updatedArray.filter(function (e: any) {
+          return e.status != false;
+        }),
+      };
+    });
+  },
   checkTodo: (id: any, todo: any) => {
     set((state: any) => ({
       pendingTodos: state.pendingTodos.filter(function (e: any) {

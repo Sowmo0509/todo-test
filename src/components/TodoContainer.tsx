@@ -30,7 +30,6 @@ export default function TodoContainer() {
   // get all todo (can be modularized in controllers)
   const getAllTodos = async () => {
     if (todos.length > 1) {
-      console.log("in state");
       if (isHighTop) {
         const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(a.priority) - getPriorityValue(b.priority));
         return setTodoToShow(sortedData);
@@ -40,7 +39,6 @@ export default function TodoContainer() {
       }
     }
 
-    console.log("fetching");
     setIsLoading(true);
     const { data } = await axios.get("/api/read");
     if (data.success == true) {
@@ -56,9 +54,7 @@ export default function TodoContainer() {
     <Card my={8} w={"sm"} maxW={"sm"} mx={4}>
       <CardHeader>
         <Flex justify={"space-between"} align={"center"}>
-          <Heading onClick={() => console.log(todoToShow)} size="md">
-            Todo List
-          </Heading>
+          <Heading size="md">Todo List</Heading>
           <AddIcon onClick={() => router.push("/new")} className="icon-hover" />
         </Flex>
         <Flex gap={2} mt={2}>

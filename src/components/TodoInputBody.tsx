@@ -6,11 +6,7 @@ export default function TodoInputBody(props: any) {
   return (
     <CardBody>
       <Stack divider={<StackDivider />} spacing="4">
-        {props.isLoading ? (
-          <Center>
-            <Spinner />
-          </Center>
-        ) : (
+        {
           <Flex gap={2} flexDir={"column"}>
             <Input name={"title"} value={props.value?.title} onChange={props.handleInput} fontSize={"sm"} placeholder="Todo Title" />
             <Textarea name={"desc"} value={props.value?.desc} onChange={props.handleInput} fontSize={"sm"} placeholder="Todo Description" />
@@ -23,7 +19,7 @@ export default function TodoInputBody(props: any) {
               {props.onEdit ? "Edit" : "Add"} Todo
             </Button>
           </Flex>
-        )}
+        }
       </Stack>
     </CardBody>
   );

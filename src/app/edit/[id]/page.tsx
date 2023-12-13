@@ -5,9 +5,11 @@ import React, { useEffect, useState } from "react";
 import TodoInputBody from "@/components/TodoInputBody";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useTodoStore } from "@/store/todoStore";
 
 const TodoEdit = ({ params }: any) => {
   const router = useRouter();
+  const { todos, getTodo, singleTodo, editTodo }: any = useTodoStore((state) => state);
   const [isLoading, setIsLoading] = useState(false);
   const [todoInfo, setTodoInfo] = useState({
     title: "",
@@ -16,23 +18,16 @@ const TodoEdit = ({ params }: any) => {
   });
 
   useEffect(() => {
-    getTodoData();
-  }, [params.id]);
-
-  const getTodoData = async () => {
-    setIsLoading(true);
-    const { data } = await axios.get(`/api/read?id=${params.id}`);
-    if (data.success == true) {
-      setIsLoading(false);
-      setTodoInfo({ title: data.data.title, desc: data.data.desc, priority: data.data.priority });
-    }
-  };
+    getTodo(todos, params.id);
+    setTodoInfo(singleTodo[0]);
+  }, [params.id, singleTodo[0]]);
 
   const handleInput = (e: any) => {
     setTodoInfo((todoInfo) => ({ ...todoInfo, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: any) => {
+    editTodo(params.id, todoInfo);
     setIsLoading(true);
     const { data } = await axios.post(`/api/edit/?id=${params.id}`, todoInfo);
     if (data.success == true) {
