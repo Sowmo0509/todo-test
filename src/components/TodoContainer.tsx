@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, Heading, Stack, StackDivider, Flex, Spinner
 import Todo from "./Todo";
 import { AddIcon, ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import axios from "axios";
 import { useTodoStore } from "@/store/todoStore";
 import getPriorityValue from "@/helpers/getPriorityValue";
@@ -18,9 +18,8 @@ export default function TodoContainer() {
 
   useEffect(() => {
     // if todos are already there, do not fetch again
-    // if (todos.length > 1) return;
     getAllTodos();
-  }, []);
+  }, [isHighTop]);
 
   // change display todo based on filtering state
   useEffect(() => {
@@ -30,6 +29,18 @@ export default function TodoContainer() {
 
   // get all todo (can be modularized in controllers)
   const getAllTodos = async () => {
+    if (todos.length > 1) {
+      console.log("in state");
+      if (isHighTop) {
+        const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(a.priority) - getPriorityValue(b.priority));
+        return setTodoToShow(sortedData);
+      } else {
+        const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(b.priority) - getPriorityValue(a.priority));
+        return setTodoToShow(sortedData);
+      }
+    }
+
+    console.log("fetching");
     setIsLoading(true);
     const { data } = await axios.get("/api/read");
     if (data.success == true) {
@@ -40,17 +51,6 @@ export default function TodoContainer() {
       console.log("issue");
     }
   };
-
-  // change asc to dsc or vice-verca based on priority
-  useEffect(() => {
-    if (isHighTop) {
-      const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(a.priority) - getPriorityValue(b.priority));
-      setTodoToShow(sortedData);
-    } else {
-      const sortedData = [...todoToShow].sort((a: any, b: any) => getPriorityValue(b.priority) - getPriorityValue(a.priority));
-      setTodoToShow(sortedData);
-    }
-  }, [isHighTop]);
 
   return (
     <Card my={8} w={"sm"} maxW={"sm"} mx={4}>

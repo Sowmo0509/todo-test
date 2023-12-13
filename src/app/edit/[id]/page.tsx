@@ -1,6 +1,6 @@
 "use client";
 import { CloseIcon } from "@chakra-ui/icons";
-import { Card, CardHeader, Heading, Flex } from "@chakra-ui/react";
+import { Card, CardHeader, Heading, Flex, Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import TodoInputBody from "@/components/TodoInputBody";
 import { useRouter } from "next/navigation";

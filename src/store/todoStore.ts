@@ -4,6 +4,7 @@ export const useTodoStore = create((set) => ({
   todos: [],
   pendingTodos: [],
   completedTodos: [],
+  singleTodo: {},
   setTodos: (allTodos: any) => {
     set((state: any) => ({
       todos: allTodos,
@@ -12,6 +13,13 @@ export const useTodoStore = create((set) => ({
       }),
       completedTodos: allTodos.filter(function (e: any) {
         return e.status != false;
+      }),
+    }));
+  },
+  getTodo: (allTodos: any, id: number) => {
+    set((state: any) => ({
+      singleTodo: allTodos.filter(function (e: any) {
+        return e.id == id;
       }),
     }));
   },
