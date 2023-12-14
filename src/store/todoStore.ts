@@ -1,3 +1,4 @@
+import axios from "axios";
 import { create } from "zustand";
 
 export const useTodoStore = create((set) => ({
@@ -23,17 +24,33 @@ export const useTodoStore = create((set) => ({
       }),
     }));
   },
-  addTodo: (newTodo: any) => {
+  addTodo: async (newTodo: any) => {
     set((state: any) => ({
       todos: [...state.todos, newTodo],
+      pendingTodos: [...state.todos, newTodo],
     }));
+    const { data } = await axios.post("/api/create", newTodo);
+    console.log(data.data);
+    set((state: any) => {
+      const allTodos = [...state.todos];
+      const updatedArray = allTodos.map((obj: any) => (obj.id === undefined ? { ...obj, id: data.data.id } : obj));
+      console.log(updatedArray);
+      return { todos: updatedArray, pendingTodos: updatedArray };
+    });
   },
-  removeTodo: (id: any) => {
+  removeTodo: async (id: any) => {
     set((state: any) => ({
       todos: state.todos.filter(function (e: any) {
         return e.id != id;
       }),
+      pendingTodos: state.pendingTodos.filter(function (e: any) {
+        return e.id != id;
+      }),
+      completedTodos: state.completedTodos.filter(function (e: any) {
+        return e.id != id;
+      }),
     }));
+    await axios.delete(`/api/delete/?id=${id}`);
   },
   editTodo: (id: any, newValue: any) => {
     set((state: any) => {

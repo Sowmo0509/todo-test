@@ -12,11 +12,11 @@ export default function Todo({ title, desc, status, priority, id, ...rest }: any
 
   const [isDone, setIsDone] = useState(status);
 
-  const handleDelete = async (id: number) => {
-    const { data } = await axios.delete(`/api/delete/?id=${id}`);
-    if (data.success == true) return removeTodo(id);
-    return window.alert("Problem when deleting a todo!");
-  };
+  // const handleDelete = async (id: number) => {
+  //   const { data } = await axios.delete(`/api/delete/?id=${id}`);
+  //   if (data.success == true) return removeTodo(id);
+  //   return window.alert("Problem when deleting a todo!");
+  // };
 
   const handleEdit = (id: any) => {
     return router.push(`/edit/${id}`);
@@ -49,7 +49,7 @@ export default function Todo({ title, desc, status, priority, id, ...rest }: any
         </Flex>
         <Flex gap={2}>
           <EditIcon onClick={() => handleEdit(id)} className="icon-hover" />
-          <DeleteIcon onClick={() => handleDelete(id)} color={"red"} className="icon-hover" />
+          <DeleteIcon onClick={() => removeTodo(id)} color={"red"} className="icon-hover" />
         </Flex>
       </Flex>
       <Text pt="2" fontSize="sm">

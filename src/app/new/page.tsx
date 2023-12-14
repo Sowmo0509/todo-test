@@ -21,14 +21,18 @@ const NewTodo = () => {
     setTodoInfo((todoInfo) => ({ ...todoInfo, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: any) => {
-    setIsLoading(true);
-    const { data } = await axios.post("/api/create", todoInfo);
-    if (data.success == true) {
-      addTodo(todoInfo);
-      setIsLoading(false);
-      return router.push("/");
-    }
+  // const handleSubmit = async (e: any) => {
+  //   setIsLoading(true);
+  //   const { data } = await axios.post("/api/create", todoInfo);
+  //   if (data.success == true) {
+  //     addTodo(todoInfo);
+  //     setIsLoading(false);
+  //     return router.push("/");
+  //   }
+  // };
+  const handleSubmit = () => {
+    addTodo(todoInfo);
+    return router.push("/");
   };
 
   return (

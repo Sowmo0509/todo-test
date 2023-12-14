@@ -75,14 +75,12 @@ export default function TodoContainer() {
           <Center>
             <Spinner />
           </Center>
-        ) : todos.length > 1 ? (
+        ) : (
           <Stack divider={<StackDivider />} spacing="4">
             {todoToShow.map((todo: any, i: number) => (
               <Todo {...todo} key={i} />
             ))}
           </Stack>
-        ) : (
-          "No todo"
         )}
       </CardBody>
       <CardFooter>
