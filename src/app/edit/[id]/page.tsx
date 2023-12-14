@@ -26,14 +26,19 @@ const TodoEdit = ({ params }: any) => {
     setTodoInfo((todoInfo) => ({ ...todoInfo, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: any) => {
+  // const handleSubmit = async (e: any) => {
+  //   editTodo(params.id, todoInfo);
+  //   setIsLoading(true);
+  //   const { data } = await axios.post(`/api/edit/?id=${params.id}`, todoInfo);
+  //   if (data.success == true) {
+  //     setIsLoading(false);
+  //     return router.push("/");
+  //   }
+  // };
+
+  const handleSubmit = () => {
     editTodo(params.id, todoInfo);
-    setIsLoading(true);
-    const { data } = await axios.post(`/api/edit/?id=${params.id}`, todoInfo);
-    if (data.success == true) {
-      setIsLoading(false);
-      return router.push("/");
-    }
+    return router.push("/");
   };
 
   return (

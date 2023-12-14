@@ -54,7 +54,7 @@ export const useTodoStore = create((set) => ({
     }));
     await axios.delete(`/api/delete/?id=${id}`);
   },
-  editTodo: (id: any, newValue: any) => {
+  editTodo: async (id: any, newValue: any) => {
     set((state: any) => {
       const allTodos = [...state.todos];
       const updatedArray = allTodos.map((item) => {
@@ -72,6 +72,14 @@ export const useTodoStore = create((set) => ({
           return e.status != false;
         }),
       };
+    });
+    const { data } = await axios.post(`/api/edit/?id=${id}`, newValue);
+    set((state: any) => {
+      const allTodos = [...state.todos];
+      const pendingTodos = [...state.pendingTodos];
+      const updatedArray = allTodos.map((obj: any) => (obj.id === id ? { ...data.data } : obj));
+      const updatedPendingArray = pendingTodos.map((obj: any) => (obj.id === id ? { ...data.data } : obj));
+      return { todos: updatedArray, pendingTodos: updatedPendingArray };
     });
   },
   checkTodo: (id: any, todo: any) => {
