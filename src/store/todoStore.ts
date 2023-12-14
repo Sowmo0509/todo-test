@@ -27,15 +27,17 @@ export const useTodoStore = create((set) => ({
   addTodo: async (newTodo: any) => {
     set((state: any) => ({
       todos: [...state.todos, newTodo],
-      pendingTodos: [...state.todos, newTodo],
+      pendingTodos: [...state.pendingTodos, newTodo],
     }));
     const { data } = await axios.post("/api/create", newTodo);
     console.log(data.data);
     set((state: any) => {
       const allTodos = [...state.todos];
+      const pendingTodos = [...state.pendingTodos];
       const updatedArray = allTodos.map((obj: any) => (obj.id === undefined ? { ...obj, id: data.data.id } : obj));
+      const updatedPendingArray = pendingTodos.map((obj: any) => (obj.id === undefined ? { ...obj, id: data.data.id } : obj));
       console.log(updatedArray);
-      return { todos: updatedArray, pendingTodos: updatedArray };
+      return { todos: updatedArray, pendingTodos: updatedPendingArray };
     });
   },
   removeTodo: async (id: any) => {

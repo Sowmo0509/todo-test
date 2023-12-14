@@ -11,13 +11,13 @@ import { useTodoStore } from "@/store/todoStore";
 // };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const { todos }: any = useTodoStore((state) => state);
+  const { pendingTodos }: any = useTodoStore((state) => state);
 
   return (
     <html lang="en">
       <body>
         <Providers>
-          <Text fontSize={"xx-small"}>{JSON.stringify(todos)}</Text>
+          <Text fontSize={"xx-small"}>{JSON.stringify(pendingTodos)}</Text>
           <Flex justify={"center"} align={"center"} minH="100vh" bgGradient="linear(to-r, #1a0f8e, #1a004e)">
             {children}
           </Flex>
